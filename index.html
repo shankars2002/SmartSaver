@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSaver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>SmartSaver: Expense Tracker</h1>
+
+    <div class="summary">
+        <h3>Income: ${{ income }}</h3>
+        <h3>Expenses: ${{ expenses }}</h3>
+        <h3>Balance: ${{ balance }}</h3>
+        <h4>Tip: {{ tip }}</h4>
+    </div>
+
+    <h2>Add a Transaction</h2>
+    <form action="/add" method="POST">
+        <label for="type">Type:</label>
+        <select name="type" required>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select><br>
+
+        <label for="description">Description:</label>
+        <input type="text" name="description" required><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" step="0.01" required><br>
+
+        <label for="category">Category:</label>
+        <select name="category" required>
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Food">Food</option>
+          
+        </select><br>
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" required><br>
+
+    
+        <label for="payment_method">Payment Method:</label>
+        <select name="payment_method" required>
+            <option value="credit">Credit</option>
+            <option value="debit">Debit</option>
+            <option value="cash">Cash</option>
+            <option value="bank_transfer">Bank Transfer</option>
+        </select><br>
+
+        <label for="notes">Notes:</label>
+        <textarea name="notes" placeholder="Additional details (optional)"></textarea><br>
+
+        <label for="recurring">Recurring Transaction:</label>
+        <input type="checkbox" name="recurring" value="yes"> Yes<br>
+
+        <label for="currency">Currency:</label>
+        <select name="currency" required>
+            <option value="USD">USD</option>
+            <option value="INR">INR</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select><br>
+
+        <input type="submit" value="Add Transaction">
+    </form>
+
+    <h2>Transaction History</h2>
+    <ul>
+        {% for transaction in transactions %}
+            <li>
+                {{ transaction.type }}: {{ transaction.description }} ({{ transaction.category }}) on {{ transaction.date }} - ${{ transaction.amount }}
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
